@@ -1,0 +1,9 @@
+*~
+build
+*.iso
+*.o
+*.a
+*.bin
+*.img
+*.map
+*.log

@@ -1,0 +1,9 @@
+# This is the bochs config for the Grub2-based ISO build.
+#
+# Running 'make mink.iso' will generate the ISO image. You 
+# then just run 'bochs -q' and FOS will boot. 
+#
+com1: enabled=1, mode=file, dev=mink.log
+boot: cdrom
+ata0-master: type=cdrom, path=mink.iso, status=inserted
+
