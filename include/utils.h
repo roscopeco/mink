@@ -35,7 +35,9 @@ int strcmp(const char* s1, const char* s2);
  * Tokenize 'in' using token character 'tok', placing at most 'maxout' tokens
  * in 'out'.
  */
-int tokenize(char tok, char *in, char **out, int maxout);
+int tokenize(char tok, char *in, const char **out, int maxout);
+
+unsigned log2_roundup(unsigned n);
 
 #endif
  

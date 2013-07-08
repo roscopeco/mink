@@ -24,6 +24,7 @@ typedef struct spinlock {
 /* Each architecture must have an arch-specific HAL header that defines:
  * 
  *    The 'isr_regs_t' struct type that passes registers etc. to an ISR.
+ *    The 'address_space_t' struct type that defines an address space.
  */
 #if defined(X86)
 #include "x86/hal.h"

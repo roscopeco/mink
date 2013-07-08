@@ -9,6 +9,7 @@
  */
 #include "hal.h"
 #include "assert.h"
+#include "sys.h"
 #include "utils.h"
 #include "mmap.h"
 #include "adt/buddy.h"
@@ -152,9 +153,11 @@ int init_physical_memory() {
   size_t bitmap_sz = overheads[0] + overheads[1] + overheads[2];
   size_t bitmap_sz_pages = round_to_page_size(bitmap_sz) >> get_page_shift();
 
-  for (unsigned i = 0; i < bitmap_sz_pages; ++i)
-    assert(map(MMAP_PMM_BITMAP + i * get_page_size(),
-               early_alloc_page(), 1, PAGE_WRITE) == 0);
+  for (unsigned i = 0; i < bitmap_sz_pages; ++i) {
+    int r = map(MMAP_PMM_BITMAP + i * get_page_size(),
+               early_alloc_page(), 1, PAGE_WRITE);
+    assert(r == 0 && "Failed to map page");
+  }
 
   int ok;
   ok  = buddy_init(&allocators[PAGE_REQ_UNDER1MB],

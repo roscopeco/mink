@@ -1,5 +1,6 @@
 CC	= i586-elf-gcc
-CFLAGS	= -Wall -Wextra -ffreestanding -std=c99 -D__MINK_KERNEL__ -DX86 -Iinclude 
+CFLAGS	= -Wall -O4 -fno-omit-frame-pointer -Wextra -ffreestanding \
+					-std=c99 -D__MINK_KERNEL__ -DX86 -DMINK_ASSERTIONS -Iinclude 
 LD	= i586-elf-ld
 LDFLAGS = -Map mink.map
 
@@ -16,6 +17,7 @@ OBJFILES = 	arch/x86/loader.o arch/x86/loader2.o kmain.o 											\
 						arch/x86/irq_stubs.o arch/x86/irqs.o															\
 						arch/x86/timer.o																									\
 						arch/x86/mem.o																										\
+						vmspace.o slab.o kmalloc.o																				\
 						locking.o utils.o arch/x86/vgaterm.o elf.o vsprintf.o												
 
 all: mink.iso
