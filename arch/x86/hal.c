@@ -29,6 +29,8 @@ int get_interrupt_state() {
 int get_num_cpucores() {
   return 1;
 }
+void idle() __attribute__((noreturn));
+void die() __attribute__((noreturn));
 
 void idle() {
   for (;;) {

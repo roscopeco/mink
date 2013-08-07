@@ -10,6 +10,7 @@
  * Copyright (c)2013 Ross Bamford. See LICENSE for details.
  */
 
+#ifdef SERIAL_DEBUG
 #include "hal.h"
 #include "sys.h"
 #include "utils.h"
@@ -69,4 +70,4 @@ static feature_t x MINK_FEATURE = {
   .load_after = NULL,
   .init = &init_serial
 };
-
+#endif

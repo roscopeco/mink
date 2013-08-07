@@ -32,6 +32,8 @@ void *memsetw(void *s, int c, size_t n) {
   return s;
 }
 
+void panic(const char*, ...) __attribute__((noreturn));
+
 void panic(const char *fmt, ...) {
   static char buf [1024];
 

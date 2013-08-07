@@ -9,16 +9,10 @@
 #include "sys.h"
 #include "utils.h"
 
-/* This will keep track of how many ticks that the system
-*  has been running for */
-static unsigned long long timer_ticks = 0;
+extern void kernel_tick(void);
 
 int timer_handler(__attribute__((unused)) isr_regs_t *r) {
-  /* Increment our 'tick count' */
-  timer_ticks++;
-  if (((int)timer_ticks) % 100 == 0) {
-    printk(".");
-  }
+	kernel_tick();
   return 0;
 }
 
@@ -29,13 +23,8 @@ void set_kernel_frequency(int hz) {
   outportb(0x40, divisor >> 8);     /* Set high byte of divisor */
 }
 
-/* required by hal.h */
-unsigned long long uptime_ticks() {
-  return timer_ticks;
-}
-
 static int timer_init() {
-  // set up for 100hz heartbeat
+  // set up heartbeat
   set_kernel_frequency(X86_KERNEL_FREQ);
   
   // Set up the timer handler

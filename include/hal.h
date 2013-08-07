@@ -16,6 +16,13 @@
 #endif
 #include "elf.h"
 
+#if defined(__GNUC__)
+#define __MINK_NORETURN __attribute__((noreturn))
+#else
+// TODO Define for other compilers if needed?
+#define __MINK_NORETURN
+#endif
+
 typedef struct spinlock {
   volatile unsigned val;
   volatile unsigned interrupts;
@@ -71,12 +78,12 @@ int get_num_cpucores();
 /**
  * Idle CPU (never returns) 
  */
-void idle();
+void idle() __MINK_NORETURN;
 
 /**
  * Halt machine (disable interrupts and idle; never returns).
  */
-void die();
+void die() __MINK_NORETURN;
 
 
 /****************************************************************
@@ -279,7 +286,7 @@ typedef struct feature {
 
 /* Mark a feature_t as 'MINK_FEATURE' to run it during kernel init e.g.:  
      static feature_t x MINK_FEATURE = {...}; */
-#define MINK_FEATURE __attribute__((__section__("features"),used))
+#define MINK_FEATURE __attribute__((__section__("features"),unused,used))
 
 
 /****************************************************************
@@ -346,16 +353,17 @@ uint8_t console_getcolor();
 /****************************************************************
  * MISC
  */
-/**
- * Print a stack trace.
- */
-void print_stack_trace();
 
 /**
  * Get the elf_t (See elf.h) structure for the kernel binary,
  * or NULL if unavailable.
  */
 elf_t get_kernel_elf();
+
+/**
+ * Print a stack trace.
+ */
+void print_stack_trace();
 
 /**
  * Set the frequency of the core kernel timer. This is an optional operation -
@@ -370,6 +378,6 @@ void set_kernel_frequency(int hz);
  * configurable depending on your platform, and at build-time) this doesn't 
  * really give you anything useful, but there you go...
  */
-unsigned long long uptime_ticks();
+unsigned long long uptime_jiffies();
 
 #endif

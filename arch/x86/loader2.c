@@ -12,9 +12,9 @@
 #include "hal.h"
 #include "utils.h"
 #include "sys.h"
+#include "elf.h"
 #include "x86/multiboot.h"
 #include "x86/vgaterm.h"
-#include "elf.h"
 
 /* Give the early allocator 2KB to play with. */
 #define EARLYALLOC_SZ 2048

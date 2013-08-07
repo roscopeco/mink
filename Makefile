@@ -17,8 +17,10 @@ OBJFILES = 	arch/x86/loader.o arch/x86/loader2.o kmain.o 											\
 						arch/x86/irq_stubs.o arch/x86/irqs.o															\
 						arch/x86/timer.o																									\
 						arch/x86/mem.o																										\
+						tick.o																														\
 						vmspace.o slab.o kmalloc.o																				\
-						locking.o utils.o arch/x86/vgaterm.o elf.o vsprintf.o												
+						arch/x86/vgaterm.o 											 													\
+						elf.o locking.o utils.o vsprintf.o
 
 all: mink.iso
  

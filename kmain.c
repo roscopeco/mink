@@ -49,6 +49,7 @@ void kmain(int argc, const char** argv) {
   printk("Kernel is up; Going idle.\n");
   
   // go into idle
+  panic("Fucks sake...");
   idle();  
 }
 

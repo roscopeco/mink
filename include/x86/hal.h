@@ -31,7 +31,7 @@ typedef struct isr_regs {
 /* This macro can be used to convert an ISR number into it's
  * corresponding IRQ number (or -1 if not an IRQ).
  */
-#define ISR_IRQ(x) ((x > 31 && x < 48) ? (x - 0x20) : -1)
+#define ISR_IRQ(x) ((x > 31U && x < 48U) ? (x - 0x20) : -1)
 
 #define THREAD_STACK_SZ 0x2000  /* 8KB of kernel stack. */
 
