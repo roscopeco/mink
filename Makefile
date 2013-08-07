@@ -1,6 +1,8 @@
+ARCH ?= X86
+
 CC	= i586-elf-gcc
 CFLAGS	= -Wall -O4 -fno-omit-frame-pointer -Wextra -ffreestanding \
-					-std=c99 -D__MINK_KERNEL__ -DX86 -DMINK_ASSERTIONS -Iinclude 
+					-std=c99 -D__MINK_KERNEL__ -D$(ARCH) -DMINK_ASSERTIONS -Iinclude 
 LD	= i586-elf-ld
 LDFLAGS = -Map mink.map
 
