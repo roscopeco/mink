@@ -48,8 +48,9 @@ void kmain(int argc, const char** argv) {
   
   printk("Kernel is up; Going idle.\n");
   
-  // go into idle
-  panic("Fucks sake...");
+  // go into idle. This is where we'll load and schedule Exec.library
+  // Exec will initialise itself, and then schedule Start to continue the
+  // boot process in user space.
   idle();  
 }
 
