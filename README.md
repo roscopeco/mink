@@ -11,6 +11,7 @@ As part of the build it will make a Grub2 rescue ISO that can be used to boot on
 
 To build, you will need:
 
+* *NASM* - Because I try to avoid GAS syntax where possible...
 * *GCC compiled for X86 cross-compilation, elf output* - The makefile looks for *i586-elf-gcc* and *i586-elf-ld*. If you need to know how to build a cross-compiler, see Google.
 * *GNU Make* - Obviously.
 * *Grub2 (with grub2-mkrescue)* - To build the ISO.
