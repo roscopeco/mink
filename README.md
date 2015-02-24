@@ -2,22 +2,30 @@ Mink is a minimal operating system kernel. Eventually it will be a research micr
 
 Parts are based on James Malloy's JMTK tutorial kernel.
 
+Mink is licensed under the MIT license - see LICENSE for details. Copyright (c)2013, 2015 Ross Bamford.
+
 What can it do?
 ---------------
 
 Currently, *not a lot*. It will boot (on x86), initialise the hardware, enable interrupts and go idle. Specifically, it will set up a sensible GDT and IDT, jump to protected mode, enable paging and set up the kernel's virtual memory space, set up the PIT for a kernel heartbeat (which currently just prints a dot every so often), enable interrupts and then go into a hlt loop.
 
-As part of the build it will make a Grub2 rescue ISO that can be used to boot on either Bochs or Qemu, or burned to a disc if you like (and have a surplus of blank discs).
+As part of the build you'll get a hard-disk image containing Grub2 and the kernel, to allow you to boot on either Bochs or Qemu. You'll also get a Grub2 rescue ISO that will boot on either, or can be burned to a disc if you like (and have a surplus of blank discs).
+The hard-disk image is the newer method for booting emulators, and should be used over the ISO which will probably be removed at some point.
 
 To build, you will need:
 
 * *NASM* - Because I try to avoid GAS syntax where possible...
 * *GCC compiled for X86 cross-compilation, elf output* - The makefile looks for *i586-elf-gcc* and *i586-elf-ld*. If you need to know how to build a cross-compiler, see Google.
 * *GNU Make* - Obviously.
-* *Grub2 (with grub2-mkrescue)* - To build the ISO.
+* *Grub2 (with grub2-mkrescue and grub2-install)* - To build the ISO and disk image.
 * *xorriso* - Required by *grub2-mkrescue*.
+* *GNU Parted* - Used to make the hard-disk image.
+* *kpartx* - Used to make the hard-disk image.
 
 You will also want either *bochs* or *qemu* unless you're planning to boot a real machine.
+
+On some distributions, you might find that grub2-xxx is named grub-xxx - if so, you'll need to edit the makefile
+and mkimage.sh appropriately.
 
 Note that the cross-compiler is *required* - It _will not_ build with a platform compiler. This is by design.
 
