@@ -66,7 +66,7 @@ kpartx -d mink.img
 
 # hack to make everything owned by the original user, since it will currently be 
 # owned by root...
-LOGNAME=`who am i | awk '{print $1}'`
+LOGNAME=`whoami`
 LOGGROUP=`groups $LOGNAME | awk '{print $3}'`
 chown $LOGNAME:$LOGGROUP -R build mink.img
 
