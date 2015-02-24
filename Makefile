@@ -1,9 +1,11 @@
 ARCH ?= X86
+CPU ?= i686
+BINFMT ?= elf
 
-CC	= i586-elf-gcc
+CC	= $(CPU)-$(BINFMT)-gcc
 CFLAGS	= -Wall -O4 -fno-omit-frame-pointer -Wextra -ffreestanding \
 					-std=c99 -D__MINK_KERNEL__ -D$(ARCH) -DMINK_ASSERTIONS -Iinclude 
-LD	= i586-elf-ld
+LD	= $(CPU)-$(BINFMT)-ld
 LDFLAGS = -Map mink.map
 
 MKDIR = mkdir -p
