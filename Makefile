@@ -4,7 +4,7 @@ BINFMT ?= elf
 
 CC	= $(CPU)-$(BINFMT)-gcc
 CFLAGS	= -Wall -O4 -fno-omit-frame-pointer -Wextra -ffreestanding \
-					-std=c99 -D__MINK_KERNEL__ -D$(ARCH) -DMINK_ASSERTIONS -Iinclude 
+					-std=c11 -D__MINK_KERNEL__ -D$(ARCH) -DMINK_ASSERTIONS -Iinclude
 LD	= $(CPU)-$(BINFMT)-ld
 LDFLAGS = -Map mink.map
 
