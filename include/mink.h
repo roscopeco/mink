@@ -19,6 +19,6 @@
 #include "sys.h"
 #include "utils.h"
 
-#define MINK_VERSION "0.1"
+#define MINK_VERSION "0.1.1"
 
 #endif
