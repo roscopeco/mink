@@ -3,7 +3,7 @@
  * This file defines certain structures that are required to be defined in an
  * architecture-specific way.
  *
- * Copyright (c)2013 Ross Bamford. See LICENSE for details.
+ * Copyright (c)2013-2016 Ross Bamford. See LICENSE for details.
  */
 
 #ifndef __MINK_X86_HAL_H
@@ -30,8 +30,11 @@ typedef struct isr_regs {
 
 /* This macro can be used to convert an ISR number into it's
  * corresponding IRQ number (or -1 if not an IRQ).
+ *
+ * -1U seems a bit counter-intuitive, but it stops a GCC warning
+ * and doesn't make any difference, so it is what it is...
  */
-#define ISR_IRQ(x) ((x > 31U && x < 48U) ? (x - 0x20) : -1)
+#define ISR_IRQ(x) ((x > 31U && x < 48U) ? (x - 0x20) : -1U)
 
 #define THREAD_STACK_SZ 0x2000  /* 8KB of kernel stack. */
 
