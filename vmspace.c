@@ -46,8 +46,12 @@ uintptr_t vmspace_alloc(vmspace_t *vms, unsigned sz, int alloc_phys) {
     size_t npages = sz >> get_page_shift();
     uintptr_t phys_pages = alloc_pages(PAGE_REQ_NONE, npages);
 
-    // Warning here on 32-bit architecture, but it can be safely ignored...
+#if CPUBITS == 64
     assert(phys_pages != ~0UL && phys_pages != ~0ULL && "Out of memory!");
+#elif CPUBITS == 32
+    assert(phys_pages != ~0UL && "Out of memory!");
+#endif
+
     int ok = map(addr, phys_pages, npages, alloc_phys);
     assert(ok == 0 && "vmspace_alloc: map failed!");
   }
