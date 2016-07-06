@@ -1,9 +1,10 @@
 /* hal.c - x86-specific HAL implementations for Mink.
  *
- * Copyright (c)2013 Ross Bamford. See LICENSE for details.
+ * Copyright (c)2013-2016 Ross Bamford. See LICENSE for details.
  */
 #include <stdint.h>
 
+#include "hal.h"
 #include "sys.h"
 #include "x86/vgaterm.h"
 #include "utils.h"
@@ -29,8 +30,9 @@ int get_interrupt_state() {
 int get_num_cpucores() {
   return 1;
 }
-void idle() __attribute__((noreturn));
-void die() __attribute__((noreturn));
+
+void idle() __MINK_NORETURN;
+void die() __MINK_NORETURN;
 
 void idle() {
   for (;;) {
@@ -41,16 +43,6 @@ void idle() {
 void die() {
   disable_interrupts();
   idle();
-}
-
-unsigned char inportb(unsigned short _port) {
-  unsigned char rv;
-  __asm__ volatile("inb %1, %0" : "=a" (rv) : "dN" (_port));
-  return rv;
-}
-
-void outportb(unsigned short _port, unsigned char _data) {
-  __asm__ volatile("outb %1, %0" : : "dN" (_port), "a" (_data));
 }
 
 void print_stack_trace() {
