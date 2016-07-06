@@ -31,16 +31,13 @@ int get_num_cpucores() {
   return 1;
 }
 
-void idle() __MINK_NORETURN;
-void die() __MINK_NORETURN;
-
-void idle() {
+noreturn void idle() {
   for (;;) {
     __asm__ volatile("hlt");
   }
 }
 
-void die() {
+noreturn void die() {
   disable_interrupts();
   idle();
 }

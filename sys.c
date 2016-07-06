@@ -1,6 +1,6 @@
 /* sys.c - Architecture-independent system-level functions for Mink.
  *
- * Copyright (c)2013 Ross Bamford. See LICENSE for details.
+ * Copyright (c)2013-2016 Ross Bamford. See LICENSE for details.
  */
 #include "sys.h"
 #include "hal.h"
@@ -32,9 +32,7 @@ void *memsetw(void *s, int c, size_t n) {
   return s;
 }
 
-void panic(const char*, ...) __attribute__((noreturn));
-
-void panic(const char *fmt, ...) {
+noreturn void panic(const char *fmt, ...) {
   static char buf [1024];
 
   va_list args;

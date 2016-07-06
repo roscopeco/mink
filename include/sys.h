@@ -8,6 +8,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include <stdnoreturn.h>
 
 /**
  * Should behave exactly like the standard.
@@ -28,6 +29,6 @@ void *memsetw(void *s, int c, size_t n);
  * Issue a kernel oshi (panic). This will print the specified message, 
  * dump a stack trace, and then call die().
  */
-void panic(const char *msg, ...);
+noreturn void panic(const char *msg, ...);
 
 #endif

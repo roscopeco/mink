@@ -11,17 +11,12 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include <stdnoreturn.h>
 #ifndef __CPLUSPLUS
 #include <stdbool.h>
 #endif
-#include "elf.h"
 
-#if defined(__GNUC__)
-#define __MINK_NORETURN __attribute__((noreturn))
-#else
-// TODO Define for other compilers if needed?
-#define __MINK_NORETURN
-#endif
+#include "elf.h"
 
 #if __SIZEOF_INT__ == 4
 #define CPUBITS 32
@@ -86,12 +81,12 @@ int get_num_cpucores();
 /**
  * Idle CPU (never returns) 
  */
-void idle() __MINK_NORETURN;
+noreturn void idle();
 
 /**
  * Halt machine (disable interrupts and idle; never returns).
  */
-void die() __MINK_NORETURN;
+noreturn void die();
 
 
 /****************************************************************
@@ -366,7 +361,7 @@ uint8_t console_getcolor();
  * Get the elf_t (See elf.h) structure for the kernel binary,
  * or NULL if unavailable.
  */
-elf_t get_kernel_elf();
+elf_t* get_kernel_elf();
 
 /**
  * Print a stack trace.
