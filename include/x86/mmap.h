@@ -1,3 +1,10 @@
+/*
+ * x86/mmap.h - x86-specific mmap.h for Mink.
+ *
+ * Copyright (c)2013-2016 Ross Bamford.
+ *
+ * See LICENSE for details.
+ */
 #ifndef X86_MMAP_H
 #define X86_MMAP_H
 
