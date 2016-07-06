@@ -18,7 +18,7 @@
 
 #include "elf.h"
 
-#if __SIZEOF_INT__ == 4
+#if __SIZEOF_POINTER__ == 4
 #define CPUBITS 32
 #elif __SIZEOF_INT__ == 8
 #define CPUBITS 64
