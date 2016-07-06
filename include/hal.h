@@ -3,7 +3,7 @@
  * Each target architecture will have it's own implementation of the functions
  * defined herein.
  *
- * Copyright (c)2013 Ross Bamford. See LICENSE for details.
+ * Copyright (c)2013-2016 Ross Bamford. See LICENSE for details.
  */
  
 #ifndef _MINK_HAL_H
@@ -21,6 +21,14 @@
 #else
 // TODO Define for other compilers if needed?
 #define __MINK_NORETURN
+#endif
+
+#if __SIZEOF_INT__ == 4
+#define CPUBITS 32
+#elif __SIZEOF_INT__ == 8
+#define CPUBITS 64
+#else
+#error "Mink supports only 32- and 64-bit architectures!"
 #endif
 
 typedef struct spinlock {
