@@ -14,10 +14,10 @@
 #include "mmap.h"
 #include "adt/buddy.h"
 
-#ifdef DEBUG_pmm
-# define dbg(args...) kprintf("pmm: " args)
+#if defined(KDEBUG_ENABLED) && defined(KDEBUG_PMM)
+#define dbg(args...) printk("pmm: " args)
 #else
-# define dbg(args...)
+#define dbg(args...)
 #endif
 
 #define MIN(x, y) ( (x < y) ? x : y )

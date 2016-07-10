@@ -12,7 +12,7 @@
 #include "sys.h"
 #include "utils.h"
 
-#ifdef DEBUG_vmm
+#if defined(KDEBUG_ENABLED) && defined(KDEBUG_VMM)
 # define dbg(args...) printk("vmm: " args)
 #else
 # define dbg(args...)
