@@ -38,14 +38,14 @@ void kmain(int argc, const char** argv) {
 
   printk("Starting platform features... \n");
   init_features();
-  printk("Platform is up.\n");	  
+  printk("Platform is up.\n");
   printk("Reticulating splines... ");
   greybox("OK", make_color(COLOR_LIGHT_GREEN, COLOR_BLACK), true);
   
   printk("Enabling interrupts... ");
   enable_interrupts();
   greybox("OK", make_color(COLOR_LIGHT_GREEN, COLOR_BLACK), true);
-  
+
   printk("Kernel is up; Going idle.\n");
   
   // go into idle. This is where we'll load and schedule Exec.library
@@ -66,11 +66,16 @@ static inline void minklogo() {
 }
 
 static void process_args(int argc, const char **argv) {
-	for (int i = 0; i < argc; i++) {
-		if (strcmp("debug", argv[i])) {
-			KDEBUG = true;
-		}
-	}
+  for (int i = 0; i < argc; i++) {
+#ifdef KDEBUG_ENABLED
+    if (strcmp("debug", argv[i])) {
+      KDEBUG = true;
+    }
+#endif
+    if (strcmp("unused", argv[i])) {
+      // Placeholder - to get rid of unused warning until we get more options =]
+    }
+  }
 }
 
 /* Just used to write a msg (usually OK or whatever) in a grey box, a'la Linux */
