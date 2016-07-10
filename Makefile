@@ -3,8 +3,9 @@ CPU ?= i686
 BINFMT ?= elf
 
 CC	= $(CPU)-$(BINFMT)-gcc
-CFLAGS	= -Wall -O4 -fno-omit-frame-pointer -Wextra -ffreestanding \
-					-std=c11 -D__MINK_KERNEL__ -D$(ARCH) -DMINK_ASSERTIONS -Iinclude
+CFLAGS	= -Wall -O4 -fno-omit-frame-pointer -Wextra -ffreestanding 				\
+		-std=c11 -D__MINK_KERNEL__ -D$(ARCH) -DMINK_ASSERTIONS -Iinclude		\
+		$(EXTRA_CFLAGS)
 LD	= $(CPU)-$(BINFMT)-ld
 LDFLAGS = -Map mink.map
 
@@ -12,18 +13,17 @@ MKDIR = mkdir -p
 RM = rm -rf
 CP = cp -r
 
-OBJFILES = 	arch/x86/loader.o arch/x86/loader2.o kmain.o 											\
-						sys.o console.o arch/x86/hal.o							 										 	\
-						bitmap.o buddy.o pmm.o arch/x86/vmm.o															\
-						arch/x86/serialterm.o																							\
-						arch/x86/gdt.o arch/x86/idt.o								 											\
-						arch/x86/isr_stubs.o arch/x86/isrs.o															\
-						arch/x86/irq_stubs.o arch/x86/irqs.o															\
-						arch/x86/timer.o																									\
-						arch/x86/mem.o																										\
-						tick.o																														\
-						vmspace.o slab.o kmalloc.o																				\
-						arch/x86/vgaterm.o 											 													\
+OBJFILES =	arch/x86/loader.o arch/x86/loader2.o kmain.o sys.o console.o arch/x86/hal.o 	\
+						bitmap.o buddy.o pmm.o arch/x86/vmm.o 		\
+						arch/x86/serialterm.o 				\
+						arch/x86/gdt.o arch/x86/idt.o			\
+						arch/x86/isr_stubs.o arch/x86/isrs.o		\
+						arch/x86/irq_stubs.o arch/x86/irqs.o		\
+						arch/x86/timer.o				\
+						arch/x86/mem.o					\
+						tick.o						\
+						vmspace.o slab.o kmalloc.o			\
+						arch/x86/vgaterm.o				\
 						elf.o locking.o utils.o vsprintf.o
 
 all: mink.img
