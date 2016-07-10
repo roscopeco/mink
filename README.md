@@ -47,6 +47,14 @@ Then one of:
 
 Should have you sorted. Personally, I prefer Qemu. Bochs (at least the version I have) seems to have some issues with its PIT implementation (it's too fast).
 
+If you want to enable debugging output, you can pass defines in `EXTRA_CFLAGS`, e.g:
+
+```
+# EXTRA_CFLAGS="-DKDEBUG_ENABLED" make
+```
+
+Along with `KDEBUG_ENABLED` you can also pass `KDEBUG_PMM` to debug the physical memory manager, and `KDEBUG_VMM` to debug the x86 virtual memory manager.
+
 What will it do, eventually?
 ----------------------------
 
