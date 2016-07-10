@@ -24,7 +24,12 @@
 #	               determine during run instead.
 #	               Also fix grub params to fix boot issue.
 #	               (Hopefully fix #2)
-#                     
+#
+#	July 10 2016 - Change sleep from 1 to 3 after running
+#	               kpartx - Sleeping for 1 wasn't cutting
+#	               it on older (i.e. slower) machines.
+#
+#	               Use `logname` instead of `who am i`. 
 
 # Create the actual disk image - 20MB
 dd if=/dev/zero of=mink.img count=20 bs=1048576
@@ -38,7 +43,8 @@ loopdev=`kpartx -l mink.img | awk -e '{ print $5; exit }'`
 kpartx -a mink.img
 
 # sleep a sec, wait for kpartx to create the device nodes
-sleep 1
+# Sleeping < 3sec *will* fail mysteriously on older machines...
+sleep 3
 
 # Make an ext2 filesystem on the first partition.
 mkfs.ext2 /dev/mapper/$looppart
@@ -76,7 +82,7 @@ kpartx -d mink.img
 
 # hack to make everything owned by the original user, since it will currently be 
 # owned by root...
-LOGNAME=`who am i | awk '{print $1}'`
+LOGNAME=`logname`
 LOGGROUP=`groups $LOGNAME | awk '{print $3}'`
 chown $LOGNAME:$LOGGROUP -R build mink.img
 
