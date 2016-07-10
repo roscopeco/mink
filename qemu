@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
-qemu-system-i386 mink.img -serial file:mink.log "$@"
+qemu-system-i386 -drive file=mink.img,format=raw -serial file:mink.log "$@"
 
