@@ -26,7 +26,7 @@ OBJFILES =	arch/x86/loader.o arch/x86/loader2.o kmain.o sys.o console.o arch/x86
 						arch/x86/vgaterm.o				\
 						elf.o locking.o utils.o vsprintf.o
 
-all: mink.img
+all: mink.bin
  
 .s.o:
 	nasm -f elf -o $@ $<

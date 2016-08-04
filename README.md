@@ -22,30 +22,32 @@ To build, you will need:
 * *GNU Parted* - Used to make the hard-disk image.
 * *kpartx* - Used to make the hard-disk image.
 
-You will also want either *bochs* or *qemu* unless you're planning to boot a real machine.
+You will also want either *bochs* or *qemu* unless you're planning to boot a real machine. 
 
-On some distributions, you might find that grub2-xxx is named grub-xxx - if so, you'll need to edit the makefile
-and mkimage.sh appropriately.
+**Note that qemu is now the recommended emulator, mink is no longer tested under bochs.** The provided `bochsrc.txt` still works (as of August 2016) but may go away in future. If you want to use bochs with the provided configuration, you'll have to run `make mink.iso` instead of `make mink.img` as specified below.
+
+On some distributions, you might find that grub2-xxx is named grub-xxx - if so, you'll need to edit the makefile and mkimage.sh appropriately.
 
 Note that the cross-compiler is *required* - It _will not_ build with a platform compiler. This is by design.
 
 How to run it?
 --------------
 
+**Note that these instructions have changed (August 2016). The default make target now only builds the kernel binary - it does not build the hard-disk image as it did before!**
+
 Let's say you have all of the above. Just do:
 
 ```
-# make
+# make mink.img
 ```
 
 Then one of:
 
 ```
-# bochs
 # ./qemu
 ```
 
-Should have you sorted. Personally, I prefer Qemu. Bochs (at least the version I have) seems to have some issues with its PIT implementation (it's too fast).
+Should have you sorted.
 
 If you want to enable debugging output, you can pass defines in `EXTRA_CFLAGS`, e.g:
 
@@ -54,6 +56,8 @@ If you want to enable debugging output, you can pass defines in `EXTRA_CFLAGS`, 
 ```
 
 Along with `KDEBUG_ENABLED` you can also pass `KDEBUG_PMM` to debug the physical memory manager, and `KDEBUG_VMM` to debug the x86 virtual memory manager.
+
+**Note** that enabling memory manager debugging will generate **lots** of output. You almost certainly don't want these switched on unless you're specifically working on the memory management subsystems.
 
 What will it do, eventually?
 ----------------------------
