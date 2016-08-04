@@ -47,15 +47,15 @@ static int init_memory() {
       total_len += entry->len;
     }
 
-#ifdef KDEBUG
+#if defined(KDEBUG_ENABLED) && defined(KDEBUG_PMM)
     printk("e: sz 0x%08x addr 0x%08x len 0x%08x ty 0x%08x\n", entry->size, (uint32_t)entry->addr, (uint32_t)entry->len, entry->type);
 #endif
 
     i += entry->size + 4;
   }
 
-#ifdef KDEBUG
-  printk("Total memory available is %d MiB\n", total_len / 1024 / 1024);
+#ifdef KDEBUG_ENABLED
+  printk("Total memory available is %d MiB", total_len / 1024 / 1024);
 #endif
 
   extern int __start, __end;
@@ -65,7 +65,7 @@ static int init_memory() {
     remove_range(&ranges[i], (uintptr_t)&__start, end);
   }
 
-#ifdef KDEBUG
+#if defined(KDEBUG_ENABLED) && defined(KDEBUG_PMM)
   for (i = 0; i < n; ++i) {
     printk("r: 0x%08xx ext 0x%08x\n", (uint32_t)ranges[i].start, (uint32_t)ranges[i].extent);
   }
