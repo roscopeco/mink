@@ -6,7 +6,7 @@
 #ifndef BUDDY_H
 #define BUDDY_H
 
-#include "stdint.h"
+#include <stdint.h>
 #include "adt/bitmap.h"
 
 /* log2 of the maximum buddy node size. */
@@ -27,7 +27,5 @@ int buddy_init(buddy_t *bd, uint8_t *overhead_storage,
 uint64_t buddy_alloc(buddy_t *bd, unsigned sz);
 void buddy_free_range(buddy_t *bd, range_t range);
 void buddy_free(buddy_t *bd, uint64_t addr, unsigned sz);
-
-extern buddy_t kernel_buddy;
 
 #endif

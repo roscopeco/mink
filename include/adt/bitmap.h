@@ -9,7 +9,7 @@
 /* This ADT exposes a statically sized bitmap structure. Initialisation of the type
    calls the given memory allocator to allocate memory. */
 
-#include "stdint.h"
+#include <stdint.h>
 
 /* A bitmap type. */
 typedef struct bitmap {
