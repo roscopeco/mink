@@ -74,7 +74,7 @@ static int gdt_init() {
                  "mov  %%ax, %%gs;"
                  "ljmp $0x08, $flushtss;"
                  "flushtss:"
-                 "mov  $0x28, %%ax;"
+                 "mov  $0x2B, %%ax;"        // 0x28 | DPL 3 = 0x2B
                  "ltr  %%ax;"
                  "1:" : : "m" (gdt_ptr) : "eax");
 
