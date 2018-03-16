@@ -20,7 +20,7 @@
 
 #if __SIZEOF_POINTER__ == 4
 #define CPUBITS 32
-#elif __SIZEOF_INT__ == 8
+#elif __SIZEOF_POINTER__ == 8
 #define CPUBITS 64
 #else
 #error "Mink supports only 32- and 64-bit architectures!"

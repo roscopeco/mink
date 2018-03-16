@@ -96,6 +96,9 @@ static inline void jmp_buf_to_regs(isr_regs_t *r, jmp_buf buf) {
 #define CR0_PG  (1U<<31)  /* Paging enable */
 #define CR0_WP  (1U<<16)  /* Write-protect - allow page faults in kernel mode */
 
+/* All these single instructions are definied here in the header
+ * and just inlined wherever they're used if possible...
+ */
 static inline void outportb(uint16_t port, uint8_t value) {
   __asm__ volatile ("outb %1, %0" : : "dN" (port), "a" (value));
 }

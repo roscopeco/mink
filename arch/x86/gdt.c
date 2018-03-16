@@ -60,7 +60,7 @@ static int gdt_init() {
                   sizeof(tss_entry_t), TY_CODE|TY_ACCESSED,  0, 3,  1, 0, 0, 1);
   }
 
-  num_gdt_entries = num_processors + 4;
+  num_gdt_entries = num_processors + 5;
   num_tss_entries = num_processors;
   
   gdt_ptr.base = (uint32_t)&entries[0];
@@ -72,9 +72,12 @@ static int gdt_init() {
                  "mov  %%ax, %%es;"
                  "mov  %%ax, %%fs;"
                  "mov  %%ax, %%gs;"
-                 "ljmp $0x08, $1f;"
+                 "ljmp $0x08, $flushtss;"
+                 "flushtss:"
+                 "mov  $0x2B, %%ax;"        // 0x28 | DPL 3 = 0x2B
+                 "ltr  %%ax;"
                  "1:" : : "m" (gdt_ptr) : "eax");
-                
+
   return 1;
 }
 
