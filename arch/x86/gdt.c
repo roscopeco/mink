@@ -60,7 +60,7 @@ static int gdt_init() {
                   sizeof(tss_entry_t), TY_CODE|TY_ACCESSED,  0, 3,  1, 0, 0, 1);
   }
 
-  num_gdt_entries = num_processors + 4;
+  num_gdt_entries = num_processors + 5;
   num_tss_entries = num_processors;
   
   gdt_ptr.base = (uint32_t)&entries[0];
