@@ -72,9 +72,12 @@ static int gdt_init() {
                  "mov  %%ax, %%es;"
                  "mov  %%ax, %%fs;"
                  "mov  %%ax, %%gs;"
-                 "ljmp $0x08, $1f;"
+                 "ljmp $0x08, $flushtss;"
+                 "flushtss:"
+                 "mov  $0x28, %%ax;"
+                 "ltr  %%ax;"
                  "1:" : : "m" (gdt_ptr) : "eax");
-                
+
   return 1;
 }
 
