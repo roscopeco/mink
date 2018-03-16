@@ -1,47 +1,13 @@
 /* gdt.c - x86 GDT Handling for Mink.
  *
- * This is heavily influenced by James Molloy's JMTK.
- * Portions copyright (c)2012 James Molloy.
- *
- * Copyright (c)2013 Ross Bamford. See LICENSE for details.
+ * Copyright (c)2013-2018 Ross Bamford. See LICENSE for details.
  */
 
 #include <stddef.h>
-#include <stdint.h>
+#include "x86/gdt.h"
 #include "hal.h"
 #include "sys.h"
 #include "utils.h"
-
-typedef struct tss_entry {
-  uint32_t prev_tss;
-  uint32_t esp0, ss0, esp1, ss1, esp2, ss2;
-  uint32_t cr3, eip, eflags;
-  uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
-  uint32_t es, cs, ss, ds, fs, gs;
-  uint32_t ldt;
-  uint16_t trap, iomap_base;
-} tss_entry_t;
-
-typedef struct gdt_entry {
-  uint16_t limit_low;
-  uint16_t base_low;
-  uint8_t  base_mid;
-  uint8_t  type : 4;
-  uint8_t  s    : 1;            /* 's' should always be 1, except for */
-  uint8_t  dpl  : 2;            /* the NULL segment. */
-  uint8_t  p    : 1;
-  uint8_t  limit_high : 4;
-  uint8_t  avail: 1;
-  uint8_t  l    : 1;
-  uint8_t  d    : 1;
-  uint8_t  g    : 1;
-  uint8_t  base_high;
-} gdt_entry_t;
-
-typedef struct gdt_ptr {
-  uint16_t limit;               /* Size of the GDT */
-  uint32_t base;                /* Start of the GDT */
-} __attribute__((packed)) gdt_ptr_t;
 
 static gdt_ptr_t gdt_ptr;
 static gdt_entry_t entries[MAX_CORES+5];
@@ -49,7 +15,6 @@ static tss_entry_t tss_entries[MAX_CORES];
 
 unsigned num_gdt_entries, num_tss_entries;
 
-static 
 void set_gdt_entry(gdt_entry_t *e, uint32_t base, uint32_t limit,
                    uint8_t type, uint8_t s, uint8_t dpl, uint8_t p, uint8_t l,
                    uint8_t d, uint8_t g) {
@@ -68,24 +33,16 @@ void set_gdt_entry(gdt_entry_t *e, uint32_t base, uint32_t limit,
   e->base_high  = (base >> 24) & 0xFF;
 }
 
-static void set_tss_entry(tss_entry_t *e) {
+static void init_tss_entry(tss_entry_t *e) {
   memset((uint8_t*)e, 0, sizeof(tss_entry_t));
   e->ss0 = e->ss = e->ds = e->es = e->fs = e->gs = 0x10;
   e->cs = 0x08;
 }
 
-#define TY_CODE 8
-
-/* Applies to code segments */
-#define TY_CONFORMING 4
-#define TY_READABLE 2
-
-/* Applies to data segments. */
-#define TY_DATA_EXPAND_DIRECTION 4
-#define TY_DATA_WRITABLE 2
-
-/* Applies to both; set by the CPU. */
-#define TY_ACCESSED 1
+void update_tss_entry(uint16_t cpu_core, uint32_t ss0, uint32_t esp0) {
+  tss_entries[cpu_core].ss0 = ss0;
+  tss_entries[cpu_core].esp0 = esp0;
+}
 
 static int gdt_init() {
   /*                         Base Limit Type                 S  Dpl P  L  D  G*/
@@ -97,10 +54,10 @@ static int gdt_init() {
 
   int num_processors = get_num_cpucores();
   for (int i = 0; i < num_processors; ++i) {
-    set_tss_entry(&tss_entries[i]);
+    init_tss_entry(&tss_entries[i]);
     set_gdt_entry(&entries[i+5], (uint32_t)&tss_entries[i],
                                       /* Type                S  Dpl P  L  D  G*/
-                  sizeof(tss_entry_t)-1, TY_CODE|TY_ACCESSED,0, 3,  1, 0, 0, 1);
+                  sizeof(tss_entry_t), TY_CODE|TY_ACCESSED,  0, 3,  1, 0, 0, 1);
   }
 
   num_gdt_entries = num_processors + 4;
