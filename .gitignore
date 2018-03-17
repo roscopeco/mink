@@ -3,6 +3,7 @@ build
 *.iso
 *.o
 *.a
+*.d
 *.bin
 *.img
 *.map
