@@ -1,8 +1,10 @@
 /*
- * mink_ramfs.c
+ * ramfs.c - Implementation of the ramfs.
  *
  *  Created on: 4 Aug 2016
  *      Author: Ross Bamford <roscopeco AT gmail DOT com>
+ *
+ * Copyright (c)2016-2018 Ross Bamford. See LICENSE for details.
  */
 
 #include <stddef.h>
