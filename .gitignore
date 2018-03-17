@@ -7,3 +7,7 @@ build
 *.img
 *.map
 *.log
+tests/results
+tests/*_Runner.c
+tests/*.test
+
