@@ -26,8 +26,12 @@ OBJFILES =	arch/x86/loader.o arch/x86/loader2.o kmain.o sys.o console.o arch/x86
 						arch/x86/vgaterm.o				\
 						elf.o locking.o utils.o vsprintf.o
 
-all: mink.bin
- 
+all: mink.bin test
+
+.PHONY: test
+test:
+	make -C tests
+
 .s.o:
 	nasm -f elf -o $@ $<
  
@@ -59,4 +63,5 @@ mink.img: image-staging
 .PHONY: clean
 clean:
 	$(RM) $(OBJFILES) *.bin *.img mink.iso build
+	make -C tests clean
  
