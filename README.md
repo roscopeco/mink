@@ -11,8 +11,8 @@ Currently, *not a lot*. It will boot (on x86), initialise the hardware, enable i
 
 It's pretty much ready for ring 3 at this point - the immediate next steps are to give it some notion of processes, and implement basic multitasking. After that, it'll be on to the cool stuff outlined later on in this document (VFS, networking, self-hosting, self-awareness, attempting to enslave humanity, etc). 
 
-As part of the build you'll get a hard-disk image containing Grub2 and the kernel, to allow you to boot on either Bochs or Qemu. You'll also get a Grub2 rescue ISO that will boot on either, or can be burned to a disc if you like (and have a surplus of blank discs).
-The hard-disk image is the newer method for booting emulators, and should be used over the ISO which will probably be removed at some point.
+~~As part of the build you'll get a hard-disk image containing Grub2 and the kernel, to allow you to boot on either Bochs or Qemu. You'll also get a Grub2 rescue ISO that will boot on either, or can be burned to a disc if you like (and have a surplus of blank discs).~~
+The hard-disk image is ~~the newer method for booting emulators~~ broken, and ~~should~~ should not be used ~~over the ISO which will probably be removed at some point~~ at all at present.
 
 To build, you will need:
 
