@@ -3,20 +3,22 @@
 #
 CC	= gcc -c
 LD	= gcc
-CFLAGS	= -Wall -O0 -std=c11 -Iunity -I.. -I../include $(EXTRA_CFLAGS)
+CFLAGS	= -Wall -O0 -std=c11 -I. -I.. -I../include $(EXTRA_CFLAGS)
 DEPEND	= gcc -MM -MG -MF
 SHELL	= bash
 RUBY 	= ruby
 RM 	= rm -rf
 MKDIR	= mkdir
 
-SOURCES = $(wildcard test_*.c)
+SOURCES = $(filter-out %_Runner.c, $(wildcard test_*.c))
 TESTS 	= $(patsubst test_%.c,test_%.test,$(SOURCES))
 PATHR	= results/
 RESULTS = $(patsubst test_%.c,$(PATHR)test_%.txt,$(SOURCES))
 
-all: test
+# TODO fix this later - should be using dependencies, not cleaning every time!
+all: clean test
 
+.PHONY: test
 test: $(TESTS) $(RESULTS)
 	@echo "-----------------------"
 	@echo "IGNORES:"
@@ -27,21 +29,24 @@ test: $(TESTS) $(RESULTS)
 	@echo "-----------------------"
 	@grep --no-filename -s FAIL: $(PATHR)*.txt; true
 	@echo
+	@grep --no-filename -s '[0-9]* Tests' $(PATHR)*.txt; true
+	@echo
 	@echo "DONE"
 
 $(PATHR)%.txt: %.test $(PATHR)
 	-./$< > $@ 2>&1
 
-%.d : %.c
+%.d: %.c
 	$(DEPEND) $@ $<
 
-%_Runner.c : %.c
-	$(RUBY) unity/generate_test_runner.rb $< $@
+%_Runner.c: %.c
+	$(RUBY) generate_test_runner.rb $< $@
 
-%o : %c %.d
+%.o: %.c
+%.o: %.c %.d
 	$(CC) $(CFLAGS) -o $@ $<
 
-%.test:%.o %_Runner.o unity/unity.o
+%.test:%.o %_Runner.o unity.o
 	$(LD) -o $@ $^
 
 $(PATHR):
@@ -49,5 +54,8 @@ $(PATHR):
 
 .PHONY: clean
 clean:
-	$(RM) *.test $(PATHR) *.d *_Runner.c
- 
+	$(RM) *.test $(PATHR) *.d *.o *_Runner.c
+
+.PRECIOUS: %.d
+.PRECIOUS: %.o
+.INTERMEDIATE: $(PATHR)%.txt
