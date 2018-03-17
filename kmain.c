@@ -1,6 +1,6 @@
 /* kmain.c - The Mink Kernel entry point.
  *
- * Copyright (c)2013 Ross Bamford. See LICENSE for details.
+ * Copyright (c)2013-2018 Ross Bamford. See LICENSE for details.
  */
 
 #ifndef __cplusplus
