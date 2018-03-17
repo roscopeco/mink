@@ -1,46 +1,61 @@
 # Makefile for unit tests. These obviously aren't cross-compiled,
 # they're run on the build platform...
 #
-CC	= gcc
-CFLAGS	= -Wall -O0 -std=c11 -Iunity -I../include $(EXTRA_CFLAGS)
-
+CC	= gcc -c
+LD	= gcc
+CFLAGS	= -Wall -O0 -std=c11 -I. -I.. -I../include $(EXTRA_CFLAGS)
+DEPEND	= gcc -MM -MG -MF
 SHELL	= bash
 RUBY 	= ruby
 RM 	= rm -rf
 MKDIR	= mkdir
 
-SOURCES = $(wildcard test_*.c)
+SOURCES = $(filter-out %_Runner.c, $(wildcard test_*.c))
 TESTS 	= $(patsubst test_%.c,test_%.test,$(SOURCES))
 PATHR	= results/
 RESULTS = $(patsubst test_%.c,$(PATHR)test_%.txt,$(SOURCES))
 
-all: test
+# TODO fix this later - should be using dependencies, not cleaning every time!
+all: clean test
 
+.PHONY: test
 test: $(TESTS) $(RESULTS)
 	@echo "-----------------------"
 	@echo "IGNORES:"
 	@echo "-----------------------"
-	@echo `grep --no-filename -s IGNORE: $(PATHR)*.txt`
+	@grep --no-filename -s IGNORE: $(PATHR)*.txt; true
 	@echo "-----------------------"
 	@echo "FAILURES:"
 	@echo "-----------------------"
-	@echo `grep --no-filename -s FAIL: $(PATHR)*.txt`
+	@grep --no-filename -s FAIL: $(PATHR)*.txt; true
+	@echo
+	@grep --no-filename -s '[0-9]* Tests' $(PATHR)*.txt; true
 	@echo
 	@echo "DONE"
 
 $(PATHR)%.txt: %.test $(PATHR)
 	-./$< > $@ 2>&1
 
-%_Runner.c : %.c
-	$(RUBY) unity/generate_test_runner.rb $< $@
+%.d: %.c
+	$(DEPEND) $@ $<
 
-%.test:%.c %_Runner.c unity/unity.c
-	$(CC) $(CFLAGS) -o $@ $^
+%_Runner.c: %.c
+	$(RUBY) generate_test_runner.rb $< $@
+
+%.o: %.c
+%.o: %.c %.d
+	$(CC) $(CFLAGS) -o $@ $<
+
+%.test:%.o %_Runner.o unity.o
+	$(LD) -o $@ $^
 
 $(PATHR):
 	$(MKDIR) $(PATHR)
 
 .PHONY: clean
 clean:
-	$(RM) *.test $(PATHR)
- 
+	$(RM) *.test $(PATHR) *.d *.o *_Runner.c
+
+.PRECIOUS: %.d
+.PRECIOUS: %.o
+.INTERMEDIATE: $(PATHR)%.txt
