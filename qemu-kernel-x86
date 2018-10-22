@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+qemu-system-i386 -d int -no-reboot -kernel mink-x86.bin -serial file:mink.log "$@"
