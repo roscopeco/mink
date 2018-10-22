@@ -35,6 +35,10 @@ SECTIONS
   {
     *(.init.bss)
   }
+  .init.data ALIGN(4096) :
+  {
+    *(.init.data)
+  }
 
   /**
      Now that the lower half stuff has been defined, we add 3GB to the link

@@ -9,9 +9,9 @@
     #define MMAP_KERNEL_START <start address of kernel virtual memory>
     #define MMAP_COW_REFCNTS  <area of virtual memory at least 64MB large> */
 
-#if defined(X64)
+#if defined(x86_64)
 #include "x64/mmap.h"
-#elif defined(X86)
+#elif defined(x86)
 #include "x86/mmap.h"
 #endif
 

@@ -5,8 +5,8 @@
  *
  * See LICENSE for details.
  */
-#ifndef X86_MMAP_H
-#define X86_MMAP_H
+#ifndef __MINK_X86_MMAP_H
+#define __MINK_X86_MMAP_H
 
 #define MMAP_KERNEL_START 0xC0000000
 

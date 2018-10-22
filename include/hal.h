@@ -36,8 +36,10 @@ typedef struct spinlock {
  *    The 'isr_regs_t' struct type that passes registers etc. to an ISR.
  *    The 'address_space_t' struct type that defines an address space.
  */
-#if defined(X86)
+#if defined(x86)
 #include "x86/hal.h"
+#elif defined(x86_64)
+#include "x86_64/hal.h"
 #else
 #error Unsupported architecture
 #endif
