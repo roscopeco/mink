@@ -1,12 +1,17 @@
-/* loader2.c - Mink second-stage loader.
- *
- * This is heavily influenced by the loader from James Molloy's JMTK.
- * Portions copyright (c)2012 James Molloy.
+/* loader2.c - Mink second-stage loader on x86.
  *
  * Copyright (c)2013-2018 Ross Bamford. See LICENSE for details.
  *
  * This is the second-stage loader for Mink. Control passes here from
  * the first-stage loader, defined in loader.s. Its responsibilities are:
+ *
+ * * earlyalloc memory in kernel space for the multiboot struct
+ * * copy the multiboot struct into kernel space
+ * * tokenize the multiboot command line (if any)
+ * * call kmain, passing in argc and argv
+ *
+ * TODO this is substantially the same as loader2 for x86_64,
+ *      they common stuff should be merged.
  */
 
 #include "hal.h"
