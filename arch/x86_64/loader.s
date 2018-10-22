@@ -43,6 +43,7 @@ mboot:  dd      MBOOT_HEADER_MAGIC
 global _start:function _start.end-_start
 _start:
         mov     esi, eax        ; temp use esi to stash the multiboot magic...
+        mov     edi, ebx        ; temp use ebi to stash multiboot pointer
         mov     esp, istack     ; Use the 4-byte initstack for cpuid check
         xor     ebp, ebp
 
@@ -75,7 +76,7 @@ _start:
         mov     eax, 0x80000001
         cpuid
         test    edx, 1 << 29
-        jnz     .nolongmode
+        jz     .nolongmode
 
         ; We have long mode
 
@@ -118,7 +119,7 @@ _start:
 
 section .init.data
 x64_msg_s       db      'U', 0x4c, 'n', 0x4c, 's', 0x4c, 'u', 0x4c, 'p', 0x4c, 'p', 0x4c, 'o', 0x4c, \
-                        'r', 0x4c, 't', 0x4c, 'e', 0x4c, 'd', 0x4c, ' ', 0x4c, 'C', 0x4c, 'P', 0x4c, 'U', 0x4c, 0xa
+                        'r', 0x4c, 't', 0x4c, 'e', 0x4c, 'd', 0x4c, ' ', 0x4c, 'C', 0x4c, 'P', 0x4c, 'U', 0x4c
 x64_msg_l       equ $ - x64_msg_s
 
 
@@ -126,7 +127,7 @@ section .init.bss nobits
 pd:     resb    0x1000          ; Page directory
 pt:     resb    0x1000          ; Page table
 istack_base:
-        resb    0x1000          ; 8 bytes of init stack
+        resb    0x4             ; 4 bytes of init stack
 istack:
 
 extern loader
@@ -137,6 +138,7 @@ section .text
 global higherhalf:function higherhalf.end-higherhalf
 higherhalf:
         mov     eax, esi        ; put multiboot magic back into eax
+        mov     ebx, edi        ; put multiboot struct back into ebx
         mov     esp, stack      ; Ensure we have a valid stack.
         xor     ebp, ebp        ; Zero the frame pointer for backtraces.
         push    ebx             ; Pass multiboot struct as a parameter

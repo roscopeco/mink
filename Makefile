@@ -13,7 +13,7 @@ MKDIR = mkdir -p
 RM = rm -rf
 CP = cp -r
 
-OBJFILES = 	arch/x86_64/loader.o arch/$(ARCH)/loader2.o arch/$(ARCH)/hal.o \
+OBJFILES = 	arch/$(ARCH)/loader.o arch/$(ARCH)/loader2.o arch/$(ARCH)/hal.o \
 		arch/$(ARCH)/vmm.o arch/$(ARCH)/serialterm.o arch/$(ARCH)/gdt.o \
 		arch/$(ARCH)/idt.o arch/$(ARCH)/isr_stubs.o arch/$(ARCH)/isrs.o	\
 		arch/$(ARCH)/irq_stubs.o arch/$(ARCH)/irqs.o arch/$(ARCH)/mem.o	\
@@ -21,7 +21,7 @@ OBJFILES = 	arch/x86_64/loader.o arch/$(ARCH)/loader2.o arch/$(ARCH)/hal.o \
 		kmain.o sys.o console.o bitmap.o buddy.o pmm.o tick.o vmspace.o \
 		slab.o kmalloc.o elf.o locking.o utils.o vsprintf.o
 
-all: mink.bin test
+all: mink-$(ARCH).bin test
 
 .PHONY: test
 test:
@@ -33,14 +33,14 @@ test:
 .c.o:
 	$(CC) $(CFLAGS) -o $@ -c $<
   
-mink.bin: $(OBJFILES)
+mink-$(ARCH).bin: $(OBJFILES)
 	$(LD) $(LDFLAGS) -T arch/$(ARCH)/linker.ld -o $@ $^	
 
 # Generates the image staging area under build/img. This is
 # the directory layout that is used to make the ISO or hard-disk
 # images for emulators.
 .PHONY: image-staging
-image-staging: mink.bin grub2/grub.cfg
+image-staging: mink-$(ARCH).bin grub2/grub.cfg
 	$(MKDIR) build/img/boot/grub2
 	$(CP) --parents $^ build/img/boot
 
