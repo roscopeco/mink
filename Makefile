@@ -1,5 +1,5 @@
-ARCH ?= x86
-CPU ?= i686
+ARCH ?= x86_64
+CPU ?= $(ARCH)
 BINFMT ?= elf
 
 CC	= $(CPU)-$(BINFMT)-gcc
