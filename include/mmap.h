@@ -1,13 +1,20 @@
+/*
+ * mmap.h - Memory map definition for Mink.
+ *
+ * Copyright (c)2013-2019 Ross Bamford.
+ *
+ * See LICENSE for details.
+ *
+ * Architecture-specific implementation headers in $(ARCH)/mmap.h must define
+ * at least one macro:
+ *
+ * #define MMAP_KERNEL_START <start address of kernel virtual memory>
+ *
+ * They will of course define any other macros needed by the architecture-
+ * specific code.
+ */
 #ifndef MMAP_H
 #define MMAP_H
-
-/** @file mmap.h Memory map definition
- 
-    This file is a stepping stone to platform specific memory map information. The
-    implementation headers in {PLATFORM}/mmap.h must define at least two macros:
-
-    #define MMAP_KERNEL_START <start address of kernel virtual memory>
-    #define MMAP_COW_REFCNTS  <area of virtual memory at least 64MB large> */
 
 #if defined(x86_64)
 #include "x86_64/mmap.h"

@@ -1,7 +1,7 @@
 /*
  * x86_64/mmap.h - x86_64-specific mmap.h for Mink.
  *
- * Copyright (c)2016 Ross Bamford.
+ * Copyright (c)2018 Ross Bamford.
  *
  * See LICENSE for details.
  */
