@@ -123,7 +123,7 @@ const char *exception_messages[] = {
   "Reserved Exception"
 };
 
-void *isr_routines[256] = {
+isr_func isr_routines[256] = {
     0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,

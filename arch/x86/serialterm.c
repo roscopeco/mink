@@ -70,4 +70,10 @@ static feature_t x MINK_FEATURE = {
   .load_after = NULL,
   .init = &init_serial
 };
+#else
+// stop pedantic warning about empty translation unit
+static char __ignored = 0;
+char __serialterm_ignored() {
+  return __ignored;
+}
 #endif

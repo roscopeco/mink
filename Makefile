@@ -3,7 +3,8 @@ CPU ?= $(ARCH)
 BINFMT ?= elf
 
 CC	= $(CPU)-$(BINFMT)-gcc
-CFLAGS	= -Wall -O4 -fno-omit-frame-pointer -Wextra -ffreestanding -std=c11	\
+CFLAGS	= -O4 -fno-omit-frame-pointer -ffreestanding -std=c11			\
+		-Wall -Wextra -Wpedantic -Werror				\
 		-D__MINK_KERNEL__ -D$(ARCH) -DMINK_ASSERTIONS -Iinclude		\
 		$(ARCH_CFLAGS)							\
 		$(EXTRA_CFLAGS)

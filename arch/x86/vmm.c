@@ -13,9 +13,9 @@
 #include "utils.h"
 
 #if defined(KDEBUG_ENABLED) && defined(KDEBUG_VMM)
-# define dbg(args...) printk("vmm: " args)
+# define dbg(...) printk("vmm: " __VA_ARGS__)
 #else
-# define dbg(args...)
+# define dbg(...)
 #endif
 
 /**

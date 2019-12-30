@@ -15,9 +15,9 @@
 #include "adt/buddy.h"
 
 #if defined(KDEBUG_ENABLED) && defined(KDEBUG_PMM)
-#define dbg(args...) printk("pmm: " args)
+#define dbg(...) printk("pmm: " __VA_ARGS__)
 #else
-#define dbg(args...)
+#define dbg(...)
 #endif
 
 #define MIN(x, y) ( (x < y) ? x : y )

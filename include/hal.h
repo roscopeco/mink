@@ -229,8 +229,8 @@ bool cow_handle_page_fault(uintptr_t addr, uintptr_t error_code);
  * Threading/Locking
  *******************************************************************************/
 
-#define SPINLOCK_RELEASED {.val=0, .interrupts=0};
-#define SPINLOCK_ACQUIRED {.val=1, .interrupts=0};
+#define SPINLOCK_RELEASED {.val=0, .interrupts=0}
+#define SPINLOCK_ACQUIRED {.val=1, .interrupts=0}
 
 /* Initialise a spinlock to the released state. */
 void spinlock_init(spinlock_t *lock);

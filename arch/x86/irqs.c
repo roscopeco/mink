@@ -9,7 +9,7 @@
 #include "utils.h"
 #include "x86/idt.h"
 
-extern void* isr_routines[256];
+extern isr_func isr_routines[256];
 
 /* ISR stubs that will call back to irq_handler (see irq_stubs.s) */
 extern void irq0();
@@ -80,9 +80,10 @@ static int irqs_init() {
 *  an EOI command to the first controller. If we don't send
 *  an EOI, we won't get any more IRQs */
 void irq_handler(isr_regs_t *r) {
-  void (*handler)(isr_regs_t *r);
+  //void (*handler)(isr_regs_t *r);
+  isr_func handler;
 
-	/* Find out if we have a custom handler to run for this interrupt.
+  /* Find out if we have a custom handler to run for this interrupt.
    * Unlike with exception handlers, if we don't have a handler we're
    * just going to ignore the IRQ (it may be a device we don't have
    * a driver for or something) instead of panicking. */
