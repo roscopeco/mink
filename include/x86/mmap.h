@@ -22,6 +22,4 @@
 
 #define MMAP_KERNEL_END   0xFF800000
 
-#define IS_KERNEL_ADDR(x) ((void*)(x) >= (void*)MMAP_KERNEL_START)
-
 #endif

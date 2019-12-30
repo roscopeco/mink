@@ -8,6 +8,16 @@
 #ifndef __MINK_X86_64_MMAP_H
 #define __MINK_X86_64_MMAP_H
 
-#error "x86_64 is not supported yet"
+#define MMAP_KERNEL_START 0xFFFFFFFF80000000
+
+#define MMAP_KERNEL_VMSPACE_START \
+                          0xFFFFFFFF90000000
+#define MMAP_KERNEL_VMSPACE_END \
+                          0xFFFFFFFFFE800000
+
+#define MMAP_PMM_BITMAP   0xFFFFFFFFFE800000
+#define MMAP_PMM_BITMAP_END 0xFFFFFFFFFF800000
+
+#define MMAP_KERNEL_END   0xFFFFFFFFFF800000
 
 #endif

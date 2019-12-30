@@ -10,9 +10,11 @@
     #define MMAP_COW_REFCNTS  <area of virtual memory at least 64MB large> */
 
 #if defined(x86_64)
-#include "x64/mmap.h"
+#include "x86_64/mmap.h"
 #elif defined(x86)
 #include "x86/mmap.h"
 #endif
+
+#define IS_KERNEL_ADDR(x) ((void*)(x) >= (void*)MMAP_KERNEL_START)
 
 #endif
