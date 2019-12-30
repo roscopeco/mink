@@ -48,7 +48,7 @@ Let's say you have all of the above. Just do:
 And then:
 
 ```
-# ./qemu-kernel
+# ./qemu-kernel-x86_64
 ```
 
 Should have you up and running. As well as the emulated output, you can also watch registers change and whatnot in your terminal if that's your bag.
@@ -62,6 +62,20 @@ If you want to enable debugging output, you can pass defines in `EXTRA_CFLAGS` t
 Along with `KDEBUG_ENABLED` you can also pass `KDEBUG_PMM` to debug the physical memory manager, and `KDEBUG_VMM` to debug the x86 virtual memory manager.
 
 **Note** that enabling memory manager debugging will generate **lots** of output. You almost certainly don't want these switched on unless you're specifically working on the memory management subsystems.
+
+Building for x86 (32-bit)
+-------------------------
+
+If you want to build a 32-bit kernel (for x86), you need to specify the `ARCH` (and probably `CPU`) to make, e.g:
+
+```
+# ARCH=x86 CPU=i686 make
+```
+
+If your cross-compiler is named e.g. `x86-elf-gcc` then just the `ARCH` is required. If (more likely) your compiler
+is named e.g. `i686-elf-gcc` then you'll need to specify `CPU` to match (as `i686` in this example).
+
+x86 32-bit support is legacy, and is likely to be dropped at some point (probably along with **all** 32-bit support).
 
 What will it do, eventually?
 ----------------------------

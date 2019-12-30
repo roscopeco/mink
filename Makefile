@@ -5,19 +5,19 @@ BINFMT ?= elf
 CC	= $(CPU)-$(BINFMT)-gcc
 CFLAGS	= -Wall -O4 -fno-omit-frame-pointer -Wextra -ffreestanding -std=c11	\
 		-D__MINK_KERNEL__ -D$(ARCH) -DMINK_ASSERTIONS -Iinclude		\
+		$(ARCH_CFLAGS)							\
 		$(EXTRA_CFLAGS)
+
 LD	= $(CPU)-$(BINFMT)-ld
-LDFLAGS = -Map mink.map
+LDFLAGS = -Map mink.map $(ARCH_LDFLAGS) $(EXTRA_LDFLAGS)
 
 MKDIR = mkdir -p
 RM = rm -rf
 CP = cp -r
 
-OBJFILES = 	arch/$(ARCH)/loader.o arch/$(ARCH)/loader2.o arch/$(ARCH)/hal.o \
-		arch/$(ARCH)/vmm.o arch/$(ARCH)/serialterm.o arch/$(ARCH)/gdt.o \
-		arch/$(ARCH)/idt.o arch/$(ARCH)/isr_stubs.o arch/$(ARCH)/isrs.o	\
-		arch/$(ARCH)/irq_stubs.o arch/$(ARCH)/irqs.o arch/$(ARCH)/mem.o	\
-		arch/$(ARCH)/timer.o arch/$(ARCH)/vgaterm.o			\
+include arch/$(ARCH)/arch.mk
+
+OBJFILES = 	$(ARCH_OBJFILES)						\
 		kmain.o sys.o console.o bitmap.o buddy.o pmm.o tick.o vmspace.o \
 		slab.o kmalloc.o elf.o locking.o utils.o vsprintf.o
 
@@ -28,7 +28,7 @@ test:
 	make -C tests
 
 .s.o:
-	nasm -f elf -o $@ $<
+	nasm $(ARCH_ASMFLAGS) -o $@ $<
  
 .c.o:
 	$(CC) $(CFLAGS) -o $@ -c $<
