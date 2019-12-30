@@ -18,19 +18,13 @@ static int skip_atoi(const char **s)
 	return i;
 }
 
-#define ZEROPAD	1		/* pad with zero */
-#define SIGN	  2   /* unsigned/signed long */
-#define PLUS    4	  /* show plus */
-#define SPACE	  8   /* space if plus */
-#define LEFT	  16  /* left justified */
-#define SPECIAL	32  /* 0x */
-#define SMALL	  64  /* use 'abcdef' instead of 'ABCDEF' */
-
-/* #define do_div(n,base) ({ \
- int __res; \
- __asm__("divl %4":"=a" (n),"=d" (__res):"0" (n),"1" (0),"r" (base)); \
- __res; })
- */
+#define ZEROPAD 1   /* pad with zero */
+#define SIGN    2   /* unsigned/signed long */
+#define PLUS    4   /* show plus */
+#define SPACE   8   /* space if plus */
+#define LEFT    16  /* left justified */
+#define SPECIAL 32  /* 0x */
+#define SMALL   64  /* use 'abcdef' instead of 'ABCDEF' */
 
 static inline int do_div(int n, int base) {
   int __res;
