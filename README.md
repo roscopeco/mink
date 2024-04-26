@@ -1,3 +1,5 @@
+> **note**: This repository is archived and development / support is discontinued.
+
 Mink is a minimal operating system kernel. Eventually it will be a research/toy microkernel with a minimal server set.
 
 Parts are based on James Malloy's excellent JMTK tutorial kernel, which I can thoroughly recommend to anyone interested in this stuff and wanting to learn.
